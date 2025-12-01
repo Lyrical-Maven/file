@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 GITHUB_USERNAME = "Lyrical-Maven"
-REPO_NAME = "flask-file-upload"
+REPO_NAME = "file"
 TOKEN = "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"
 
 def upload_to_github(filename, content):
