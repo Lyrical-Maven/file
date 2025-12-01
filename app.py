@@ -1,39 +1,38 @@
-import base64
-import requests
 from flask import Flask, render_template, request
+from github import Github
+import os
 
 app = Flask(__name__)
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024   # 50 MB
 
-GITHUB_USERNAME = "Lyrical-Maven"
-REPO_NAME = "file"
-TOKEN = "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"
+GITHUB_TOKEN = "YOUR_TOKEN_HERE"
+GITHUB_REPO = "Lyrical-Maven/file"     # your repo name
 
-def upload_to_github(filename, content):
-    url = f"https://api.github.com/repos/{GITHUB_USERNAME}/{REPO_NAME}/contents/uploads/{filename}"
+g = Github(GITHUB_TOKEN)
+repo = g.get_repo(GITHUB_REPO)
 
-    encoded = base64.b64encode(content).decode('utf-8')
-
-    data = {
-        "message": f"Upload {filename}",
-        "content": encoded
-    }
-
-    response = requests.put(url, json=data, auth=(GITHUB_USERNAME, TOKEN))
-    return response
-
-@app.route("/")
+@app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template('index.html')
 
-@app.route("/upload", methods=["POST"])
+@app.route('/upload', methods=['POST'])
 def upload():
-    file = request.files["file"]
-    response = upload_to_github(file.filename, file.read())
+    if 'file' not in request.files:
+        return "No file selected."
 
-    if response.status_code in [200, 201]:
-        return "File uploaded successfully!"
-    else:
-        return f"Error: {response.text}"
+    file = request.files['file']
 
-if __name__ == "__main__":
+    if file.filename == "":
+        return "File has no name."
+
+    content = file.read()
+    filename = file.filename
+
+    try:
+        repo.create_file(f"uploads/{filename}", f"Upload {filename}", content)
+        return f"Uploaded {filename} to GitHub."
+    except:
+        return f"File {filename} already exists in repo."
+
+if __name__ == '__main__':
     app.run(debug=True)
