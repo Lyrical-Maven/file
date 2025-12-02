@@ -1,5 +1,5 @@
 // Replace below with your Render URL after deployment
-const API = "https://RENDER_URL_HERE"; // e.g. https://your-service.onrender.com
+const API = "https://file-backend-6lst.onrender.com/"; // e.g. https://your-service.onrender.com
 
 async function uploadFile() {
     const fileInput = document.getElementById("fileInput");
