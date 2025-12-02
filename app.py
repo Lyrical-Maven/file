@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024   # 50 MB
 
-GITHUB_TOKEN = "YOUR_TOKEN_HERE"
+GITHUB_TOKEN = "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
 GITHUB_REPO = "Lyrical-Maven/file"     # your repo name
 
 g = Github(GITHUB_TOKEN)
