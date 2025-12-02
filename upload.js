@@ -3,7 +3,7 @@ const REPO = "file";
 const BRANCH = "main";
 
 // 🔥 IMPORTANT: paste your personal access token here
-const TOKEN = "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";
+const TOKEN = "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";
 
 async function uploadFile() {
     const fileInput = document.getElementById("fileInput");
