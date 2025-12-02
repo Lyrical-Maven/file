@@ -5,8 +5,8 @@ import os
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024   # 50 MB
 
-GITHUB_TOKEN = "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"
-GITHUB_REPO = "Lyrical-Maven/file"     # your repo name
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")  # pulled from Render env
+GITHUB_REPO = "Lyrical-Maven/file"
 
 g = Github(GITHUB_TOKEN)
 repo = g.get_repo(GITHUB_REPO)
@@ -21,7 +21,6 @@ def upload():
         return "No file selected."
 
     file = request.files['file']
-
     if file.filename == "":
         return "File has no name."
 
@@ -31,8 +30,8 @@ def upload():
     try:
         repo.create_file(f"uploads/{filename}", f"Upload {filename}", content)
         return f"Uploaded {filename} to GitHub."
-    except:
-        return f"File {filename} already exists in repo."
+    except Exception as e:
+        return f"Upload failed: {str(e)}"
 
 if __name__ == '__main__':
     app.run(debug=True)
