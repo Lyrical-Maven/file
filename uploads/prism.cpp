@@ -2,6 +2,7 @@
 using namespace std;
 
 #define V 5
+#define INF 9999   // <-- use this if you want a named constant
 
 // Function to find the vertex with minimum key value not yet included in MST
 int minKey(int key[], bool mstSet[]) {
@@ -68,3 +69,4 @@ int main() {
 
     return 0;
 }
+
