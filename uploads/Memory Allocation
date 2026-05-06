@@ -1,0 +1,52 @@
+# INPUT
+blocks = list(map(int, input("Enter memory blocks: ").split()))
+processes = list(map(int, input("Enter process sizes: ").split()))
+
+# -------- FIRST FIT --------
+print("\n--- First Fit ---")
+b = blocks.copy()
+
+for p in processes:
+    allocated = False
+    for i in range(len(b)):
+        if b[i] >= p:
+            print(f"Process {p} -> Block {b[i]}")
+            b[i] -= p
+            allocated = True
+            break
+    if not allocated:
+        print(f"Process {p} -> Not Allocated")
+
+# -------- BEST FIT --------
+print("\n--- Best Fit ---")
+b = blocks.copy()
+
+for p in processes:
+    best = -1
+    for i in range(len(b)):
+        if b[i] >= p:
+            if best == -1 or b[i] < b[best]:
+                best = i
+
+    if best != -1:
+        print(f"Process {p} -> Block {b[best]}")
+        b[best] -= p
+    else:
+        print(f"Process {p} -> Not Allocated")
+
+# -------- WORST FIT --------
+print("\n--- Worst Fit ---")
+b = blocks.copy()
+
+for p in processes:
+    worst = -1
+    for i in range(len(b)):
+        if b[i] >= p:
+            if worst == -1 or b[i] > b[worst]:
+                worst = i
+
+    if worst != -1:
+        print(f"Process {p} -> Block {b[worst]}")
+        b[worst] -= p
+    else:
+        print(f"Process {p} -> Not Allocated")
