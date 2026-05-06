@@ -1,0 +1,29 @@
+gcc prog4.c -o prog4
+./prog4
+#include <stdio.h>
+#include <sys/utsname.h>
+
+int main() {
+    struct utsname u;
+
+    // Get kernel/system info
+    uname(&u);
+
+    printf("System Name: %s\n", u.sysname);
+    printf("Node Name  : %s\n", u.nodename);
+    printf("Release    : %s\n", u.release);
+    printf("Version    : %s\n", u.version);
+    printf("Machine    : %s\n", u.machine);
+
+    printf("\n--- CPU Info ---\n");
+
+    FILE *fp = fopen("/proc/cpuinfo", "r");
+    char line[256];
+
+    while(fgets(line, sizeof(line), fp)) {
+        printf("%s", line);
+    }
+
+    fclose(fp);
+    return 0;
+}
