@@ -1,0 +1,22 @@
+gcc prog3c.c -o prog3c
+./prog3c
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t pid = fork();
+
+    if(pid == 0) {
+        // Child process
+        printf("Child is running\n");
+    } else if(pid > 0) {
+        // Parent process waits
+        wait(NULL);
+        printf("Parent runs after child finishes\n");
+    } else {
+        printf("Fork failed\n");
+    }
+
+    return 0;
+}
