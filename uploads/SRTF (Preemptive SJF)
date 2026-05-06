@@ -1,0 +1,33 @@
+n = int(input("Enter number of processes: "))
+bt = list(map(int, input("Enter burst times: ").split()))
+
+rt = bt.copy()
+wt = [0]*n
+t = 0
+complete = 0
+
+while complete != n:
+    min_bt = float('inf')
+    shortest = -1
+
+    for i in range(n):
+        if rt[i] > 0 and rt[i] < min_bt:
+            min_bt = rt[i]
+            shortest = i
+
+    if shortest == -1:
+        t += 1
+        continue
+
+    rt[shortest] -= 1
+
+    if rt[shortest] == 0:
+        complete += 1
+        finish = t + 1
+        wt[shortest] = finish - bt[shortest]
+
+    t += 1
+
+print("\nP  BT  WT")
+for i in range(n):
+    print(f"P{i+1} {bt[i]} {wt[i]}")
