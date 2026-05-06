@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    fork();  // creates a child process
+
+    printf("This line is executed by both parent and child\n");
+
+    return 0;
+}
