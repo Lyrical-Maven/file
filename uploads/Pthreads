@@ -1,0 +1,43 @@
+gcc prog9.c -o prog9 -lpthread
+./prog9
+#include <stdio.h>
+#include <pthread.h>
+
+int arr[100], n;
+int sum1 = 0, sum2 = 0;
+
+void* part1(void* arg) {
+    for(int i = 0; i < n/2; i++) {
+        sum1 += arr[i];
+    }
+    return NULL;
+}
+
+void* part2(void* arg) {
+    for(int i = n/2; i < n; i++) {
+        sum2 += arr[i];
+    }
+    return NULL;
+}
+
+int main() {
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    pthread_t t1, t2;
+
+    pthread_create(&t1, NULL, part1, NULL);
+    pthread_create(&t2, NULL, part2, NULL);
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+
+    printf("Total Sum = %d\n", sum1 + sum2);
+
+    return 0;
+}
