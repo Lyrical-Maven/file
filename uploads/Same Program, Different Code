@@ -1,3 +1,5 @@
+gcc prog3b.c -o prog3b
+./prog3b
 #include <stdio.h>
 #include <unistd.h>
 
