@@ -1,29 +1,13 @@
-gcc prog4.c -o prog4
-./prog4
-#include <stdio.h>
-#include <sys/utsname.h>
+python3 prog4.py
+import platform
 
-int main() {
-    struct utsname u;
+print("System:", platform.system())
+print("Node Name:", platform.node())
+print("Release:", platform.release())
+print("Version:", platform.version())
+print("Machine:", platform.machine())
 
-    // Get kernel/system info
-    uname(&u);
+print("\n--- CPU Info ---")
 
-    printf("System Name: %s\n", u.sysname);
-    printf("Node Name  : %s\n", u.nodename);
-    printf("Release    : %s\n", u.release);
-    printf("Version    : %s\n", u.version);
-    printf("Machine    : %s\n", u.machine);
-
-    printf("\n--- CPU Info ---\n");
-
-    FILE *fp = fopen("/proc/cpuinfo", "r");
-    char line[256];
-
-    while(fgets(line, sizeof(line), fp)) {
-        printf("%s", line);
-    }
-
-    fclose(fp);
-    return 0;
-}
+with open("/proc/cpuinfo", "r") as f:
+    print(f.read())
